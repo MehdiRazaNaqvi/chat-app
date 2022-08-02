@@ -1,0 +1,86 @@
+
+
+*{
+  padding: 0;margin: 0;
+}
+
+
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(560deg);
+  }
+}
+
+
+
+
+
+.home_base{
+  width: 100%;
+  height: 100vh;
+  background-color: red;
+
+  display: flex;
+  
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  
+}
+
+
+
+.page1{
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+
+.partial{
+  width: 50%;
+  height: 100%;
+  background-color: pink;
+}
+
+
+.right{
+  background-color: yellow;
+}
+
+
+
+.imagepreview{
+  width: 50%;
+  height: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+.left{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10%  ;
+} 
+
+
+
