@@ -12,7 +12,7 @@
     transform: rotate(0deg);
   }
   to {
-    transform: rotate(560deg);
+    transform: rotate(1000deg);
   }
 }
 
@@ -23,26 +23,17 @@
 .home_base{
   width: 100%;
   height: 100vh;
-  background-color: red;
+  background-color: white;
 
-  display: flex;
   
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
-  
-}
-
-
-
-.page1{
-  width: 100%;
-  height: 100%;
-
   display: flex;
   align-items: center;
   justify-content: center;
+  
 }
+
+
+
 
 
 
@@ -50,12 +41,16 @@
 .partial{
   width: 50%;
   height: 100%;
-  background-color: pink;
+  /* background-color: pink; */
 }
 
 
 .right{
-  background-color: yellow;
+  background-color: rgb(255, 255, 255);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
@@ -84,3 +79,112 @@
 
 
 
+
+
+.home_pic{
+  width: 60%;
+  height: 60%;
+
+  animation: 200s App-logo-spin infinite;
+  /* background-color: red; */
+
+  border-radius: 50%;
+}
+
+
+
+.home_btn{
+  width: 15vw;
+  height: 5vh;
+  border: 1px solid rgb(99, 150, 99);
+  border-radius: 1rem;
+
+  font-size: x-small;
+}
+
+
+.home_btn:hover{  
+  background-color:  rgb(208, 255, 208);
+
+}
+
+
+
+
+
+
+
+
+.main_logo{
+  display: none;
+}
+
+
+
+/* Responsive */
+
+
+
+
+
+
+@media only screen and (max-width:1000px) {
+  .right{
+    display: none ;
+  }
+
+  .home_btn{
+    width: 25vw;
+    height: 6%;
+  }
+
+  .main_logo{
+    display: flex;
+    height: 10vh;
+    width: 10vw;
+  }
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width:600px) {
+  .home_btn{
+    font-size: xx-small;
+    font-family: sans-serif;
+    width: 35vw;
+  }
+
+  .main_logo{
+    width: 15vw;
+  }
+}
+
+
+
+
+
+@media only screen and (max-width:380px) {
+.home_btn{
+  font-size: 50%;
+  width: 50vw;
+}
+
+.main_logo{
+
+  width: 20vw;
+  height: 15vh;
+}
+
+
+}

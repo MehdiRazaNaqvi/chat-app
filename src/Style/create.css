@@ -1,0 +1,143 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+
+.create_base {
+    width: 100%;
+    height: 110vh;
+    /* background-color: yellow; */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.crnavbar{
+    position: fixed;
+    top: 0%;
+}
+
+
+.post_pic_div {
+    width: 50%;
+    height: 50%;
+    background-color: rgb(244, 244, 244);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5%;
+}
+
+
+
+.input {
+    background-color: green;
+    width: 100%;
+    height: 50%;
+
+
+
+}
+
+
+.imagepreview {
+
+    width: 50%;
+    height: 50%;
+
+    border-radius: 3rem;
+    
+    
+}
+
+
+.confirm {
+    width: 100%;
+    height: 5%;
+    font-size: x-small;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+
+}
+
+
+
+.login_error {
+    font-size: small;
+    
+}
+
+
+
+
+
+
+
+.input_post{
+    width: 60%;
+    height: 15%;
+    border-radius: 1rem;
+
+    border: 1px solid grey;
+}
+
+
+
+.create_btn{
+    width: 50%;
+    height: 10%;
+    font: small;
+
+    border-radius: 2rem;
+
+    border: 1px solid grey;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Responsive */
+
+
+
+@media only screen and (max-width:500px) {
+
+    .post_pic_div{
+        width: 90%;
+        
+    }
+
+    .login_error{
+        font-size: x-small;
+    }
+    
+    .create_btn{
+        font-size: xx-small;
+    }
+
+    .input_post{
+        height: 7%;
+    }
+
+}

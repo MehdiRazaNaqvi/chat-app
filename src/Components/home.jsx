@@ -38,52 +38,6 @@ const App = () => {
 
 
 
-    const google_login = () => {
-
-
-
-
-
-
-        const provider = new GoogleAuthProvider();
-        signInWithPopup(auth, provider)
-            .then((result) => {
-
-
-
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-
-                const user = result.user;
-
-
-
-                const obj = { username: user.displayName, photoURL: user.photoURL, providerId: user.providerId }
-
-
-                dispatch(current_user(obj))
-                navigate("/post")
-
-
-
-
-            }).catch((error) => {
-
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage)
-                // const email = error.email;
-
-                // const credential = GoogleAuthProvider.credentialFromError(error);
-
-            });
-
-
-
-
-
-    }
-
 
 
 
@@ -100,13 +54,13 @@ const App = () => {
 
 
 
-            <div className="page1"  >
+           
 
                 <div className="partial left">
 
-                    <button onClick={() => google_login()}>Continue with Google</button>
-                    <button onClick={() => navigate("/chat")}>Continue to Chat</button>
-                    <button onClick={() => navigate("/post")}>Continue to Feed</button>
+                    <img src="https://img.icons8.com/ios/50/000000/airtable.png" className='main_logo'  />
+                    <button className='home_btn' onClick={() => navigate("/chat-app/chat")}>Continue to Chat</button>
+                    <button className='home_btn' onClick={() => navigate("/chat-app/post")}>Continue to Feed</button>
 
 
 
@@ -116,11 +70,14 @@ const App = () => {
                 </div>
 
 
-                <div className="partial right"></div>
+                <div className="partial right">
+
+                    <img src="https://webimages.mongodb.com/_com_assets/cms/globe@2x-kgv9ll4o7r-havl08h54l.png?auto=format%2Ccompress&ch=DPR" className='home_pic' />
+                </div>
 
 
 
-            </div>
+       
 
 
 

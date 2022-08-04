@@ -7,9 +7,13 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
 
-  current_user: {username : "none"},
+  current_user: { username: "none" , photoURL : "" },
 
-  feed : [{username : "jamil" , pic : "" , user_pic : ""} , {} , {}]
+  feed: [],
+
+  chat: [],
+
+  messeger : {}
 
 
 
@@ -46,7 +50,26 @@ export const counterSlice = createSlice({
     },
 
 
-    
+
+    fetch_feed: (state, payload) => {
+
+      state.feed = payload.payload
+
+    },
+
+
+
+
+
+    save_chat: (state, payload) => {
+
+      // console.log(payload.payload)
+      state.chat = [...state.chat , payload.payload]
+
+
+      
+
+    }
 
 
 
@@ -65,6 +88,6 @@ export const counterSlice = createSlice({
 
 
 
-export const { current_user , } = counterSlice.actions
+export const { current_user, fetch_feed, save_chat } = counterSlice.actions
 
 export default counterSlice.reducer

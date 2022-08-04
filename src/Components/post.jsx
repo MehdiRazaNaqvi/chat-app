@@ -6,14 +6,18 @@ import { auth } from "../config/firebase"
 import { GoogleAuthProvider } from "firebase/auth"
 import { signInWithPopup } from "firebase/auth"
 
-import { current_user } from "../store/counterslice"
+import { current_user, fetch_feed } from "../store/counterslice"
 
+import { useNavigate } from "react-router-dom"
 
+import { useEffect } from "react"
 
 
 const App = () => {
     const count = useSelector(state => state.counter)
     const dispatch = useDispatch()
+
+    const navigate = useNavigate()
 
 
 
@@ -39,7 +43,8 @@ const App = () => {
 
 
 
-                const obj = { username: user.displayName, photoURL: user.photoURL, providerId: user.providerId }
+
+                const obj = { username: user.displayName, photoURL: user.photoURL, uid: user.uid }
 
 
                 dispatch(current_user(obj))
@@ -68,13 +73,77 @@ const App = () => {
 
 
 
+    const liked = (v) => {
+
+
+        const headers = {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+            'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': '*'
+        }
+
+        const like_post_data = { uid: count.current_user.uid, _id: v._id }
+
+        {
+            v.likers.includes(count.current_user.uid) ? alert("You have already like this post") :
+
+            fetch('https://chat-app-ser.herokuapp.com/liked', {
+                method: "post",
+                headers: headers,
+
+                body: JSON.stringify(like_post_data)
+
+            })
+                .then(() => console.log("Liked succesfully"))
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+    const fetch_post = () => {
+
+        const headers = {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+            'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': '*'
+        }
+
+        fetch('https://chat-app-ser.herokuapp.com/getpost', {
+            method: "get",
+            headers: headers
+        })
+
+            .then(r => r.json())
+            .then(data => dispatch(fetch_feed(data)))
+    }
+
+
+
+
+    useEffect(() => {
+
+        fetch_post()
+    }, [2]);
+
+
+
     return (
         <div className="post_base">
 
 
+
             <div className='navbar'>
 
-                <img src="https://img.icons8.com/ios/50/000000/airtable.png" className='logo' />
+                <img onClick={() => navigate("/chat-app")} src="https://img.icons8.com/ios/50/000000/airtable.png" className='logo' />
 
                 <span className="nav_span_right">
 
@@ -82,33 +151,61 @@ const App = () => {
 
                     {count.current_user.username != "none" ?
 
-                        <img src={count.current_user.photoURL} className='nav_img' referrerPolicy='no-referrer' />
+                        <img onClick={() => google_login()} src={count.current_user.photoURL} className='nav_img' referrerPolicy='no-referrer' />
 
                         :
-                        <p className="nav_text" onClick={() => google_login()}>Log in</p>
+                        <p className="nav_text border" onClick={() => google_login()}>Log in</p>
                     }
 
 
-                    <p className="nav_text">Post</p>
-                    <p className="nav_text" >Chat</p>
+                    <p className="nav_text" onClick={() => navigate("/chat-app/create")} >Post</p>
+                    <p className="nav_text" onClick={() => navigate("/chat-app/chat")} >Chat</p>
 
                 </span>
 
             </div>
 
 
+
+
+
+
+
             <div className="post_bottom">
 
-                            <div className="actual_post" >
-                                <div className="user_info_tab">
 
-                                </div>
 
-                                <div className="pic_tab" ></div>
 
-                            </div>
+
+                {count.feed.map((v, i) =>
+
+                    <div className="actual_post" key={i} >
+                        <div className="post_info_tab">
+                            <img src={v.user_pic} referrerPolicy="no-referrer" className="profile_pic" />
+                            <p className="user_name" >{v.user_name}</p>
+
+
+                        </div>
+
+                        <div className="pic_tab" >
+                            <img src={v.pic} className="post_pic" />
+                        </div>
+
+                        <div className="likes_tab" >
+
+                            <img onClick={() => { count.current_user.username != "none"? liked(v) : alert("Please log in first") }} src= { v.likers.includes(count.current_user.uid) ? "https://img.icons8.com/ios-filled/50/000000/like--v1.png" : "https://img.icons8.com/ios/50/000000/like--v1.png" }  className="like_btn" />
+                            <p className="likers_len"  >{v.likers.length}</p>
+                        </div>
+
+                    </div>
+
+                )
+                }
+
 
             </div>
+
+
 
 
         </div>
