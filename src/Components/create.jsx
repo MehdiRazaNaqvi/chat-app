@@ -11,10 +11,10 @@ import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 import { current_user } from "../store/counterslice"
-import { useState } from "react"
+import { useState } from "react";
 
 
-
+import FileBase64 from "react-file-base64";
 
 
 
@@ -32,19 +32,21 @@ const App = () => {
 
 
 
-    const checkImage = (e) => {
+    // const checkImage = (e) => {
 
-        const file = e.target.files[0]
-        setPreview(URL.createObjectURL(file))
+    //     const file = e.target.files[0]
+    //     setPreview(URL.createObjectURL(file))
 
-    }
+    // }
 
 
 
     const sendpost = () => {
-        const data = { user_name: count.current_user.username, user_pic: count.current_user.photoURL, pic: preview, likers: [] }
+
+        const data = { user_name: count.current_user.username, user_pic: count.current_user.photoURL, pic : preview,  likers: [] }
 
         console.log(data)
+
         const headers = {
             'Content-Type': 'application/json;charset=UTF-8',
             "Access-Control-Allow-Origin": "*",
@@ -53,6 +55,10 @@ const App = () => {
         }
 
         fetch('https://chat-app-ser.herokuapp.com/setpost', {
+
+
+        // fetch('http://localhost:4000/setpost', {
+
             method: "post",
             headers: headers,
             body: JSON.stringify(data)
@@ -156,7 +162,13 @@ const App = () => {
                         <div className="confirm" >You are posting as {count.current_user.username} </div>
                         {/* <input  className="input" type="file" onChange={(e) => checkImage(e)} /> */}
 
-                        <input className="input_post" type="text" onChange={(e) => setPreview(e.target.value)} />
+                        {/* <input placeholder="Paste image address" className="input_post" type="text" onChange={(e) => setPreview(e.target.value)} /> */}
+                        <FileBase64 
+                        
+                        multiple={false}
+                        onDone={({base64}) => setPreview(base64) }
+                        />
+
 
                         <img referrerPolicy="no-referrer" className='imagepreview' src={preview || defaultimg} />
                         <button className="create_btn" onClick={() => sendpost()}>Post</button>

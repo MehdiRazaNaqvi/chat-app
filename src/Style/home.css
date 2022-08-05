@@ -159,6 +159,7 @@
 
 
 @media only screen and (max-width:600px) {
+
   .home_btn{
     font-size: xx-small;
     font-family: sans-serif;
@@ -175,6 +176,7 @@
 
 
 @media only screen and (max-width:380px) {
+
 .home_btn{
   font-size: 50%;
   width: 50vw;
@@ -182,8 +184,8 @@
 
 .main_logo{
 
-  width: 20vw;
-  height: 15vh;
+  width: 25vw;
+  height: 25vh;
 }
 
 

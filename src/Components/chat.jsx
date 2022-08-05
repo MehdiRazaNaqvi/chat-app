@@ -45,6 +45,8 @@ const App = () => {
 
 
 
+    console.log(count.chat)
+
 
 
     const sendchat = () => {
@@ -173,13 +175,15 @@ const App = () => {
                 {count.chat.map((v, i) => (
                     <div className={count.current_user.photoURL == v.user_pic ? "message_bg own_msg" : "message_bg"} key={i}>
 
-                        <img src={v.user_pic} referrerPolicy="no-referrer" className="text_pic" />
-                        {v.mess}
+                            <img src={v.user_pic} referrerPolicy="no-referrer" className="text_pic" />
+                            {v.mess}
+
 
                     </div>
                 ))}
 
             </div>
+
 
 
 
@@ -193,8 +197,8 @@ const App = () => {
 
                 </span>
                 :
-                <span className="send_tab" >
-                    <p className="login_to_join" onClick={() => google_login()} >Log in to join the chat</p>
+                <span className="send_tab" onClick={() => google_login()} >
+                    <p className="login_to_join">Log in to join the chat</p>
 
                 </span>
             }

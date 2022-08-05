@@ -10,15 +10,18 @@ import { current_user, fetch_feed } from "../store/counterslice"
 
 import { useNavigate } from "react-router-dom"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
+
+
+
+import Loader from "../pics/loader.png"
 
 const App = () => {
     const count = useSelector(state => state.counter)
     const dispatch = useDispatch()
 
     const navigate = useNavigate()
-
 
 
 
@@ -88,14 +91,14 @@ const App = () => {
         {
             v.likers.includes(count.current_user.uid) ? alert("You have already like this post") :
 
-            fetch('https://chat-app-ser.herokuapp.com/liked', {
-                method: "post",
-                headers: headers,
+                fetch('https://chat-app-ser.herokuapp.com/liked', {
+                    method: "post",
+                    headers: headers,
 
-                body: JSON.stringify(like_post_data)
+                    body: JSON.stringify(like_post_data)
 
-            })
-                .then(() => console.log("Liked succesfully"))
+                })
+                    .then(() => fetch_post())
 
         }
 
@@ -104,11 +107,46 @@ const App = () => {
 
 
 
+    console.log(count.feed)
+
+
+
+    const delete_post = (v) => {
+
+        
+
+        const headers = {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+            'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': '*'
+        }
+
+
+        const del_payload = { id: v._id }
+
+
+
+        fetch('https://chat-app-ser.herokuapp.com/delete', {
+            method: "post",
+            headers: headers,
+
+            body: JSON.stringify(del_payload)
+
+        })
+            .then(() => fetch_post())
+
+
+
+    }
+
 
 
 
 
     const fetch_post = () => {
+
+        console.log("fetching")
 
         const headers = {
             'Content-Type': 'application/json;charset=UTF-8',
@@ -133,6 +171,7 @@ const App = () => {
 
         fetch_post()
     }, [2]);
+
 
 
 
@@ -171,7 +210,7 @@ const App = () => {
 
 
 
-            <div className="post_bottom">
+            <div className={count.feed.length < 1 ? "invisible" : "post_bottom"} >
 
 
 
@@ -180,12 +219,28 @@ const App = () => {
                 {count.feed.map((v, i) =>
 
                     <div className="actual_post" key={i} >
+
                         <div className="post_info_tab">
-                            <img src={v.user_pic} referrerPolicy="no-referrer" className="profile_pic" />
-                            <p className="user_name" >{v.user_name}</p>
+
+                            <span className="pic_and_name">
+
+                                <img src={v.user_pic} referrerPolicy="no-referrer" className="profile_pic" />
+                                <p className="user_name" >{v.user_name}</p>
+
+                            </span>
 
 
+                            {count.current_user.photoURL == v.user_pic ?
+                                <span className="img_delete" onClick={() => delete_post(v)} >
+                                    <img className="img_cover" src="https://img.icons8.com/external-inkubators-detailed-outline-inkubators/25/000000/external-delete-ecommerce-user-interface-inkubators-detailed-outline-inkubators.png" alt="" />
+                                </span>
+                                :
+                                null
+                            }
                         </div>
+
+
+
 
                         <div className="pic_tab" >
                             <img src={v.pic} className="post_pic" />
@@ -193,7 +248,7 @@ const App = () => {
 
                         <div className="likes_tab" >
 
-                            <img onClick={() => { count.current_user.username != "none"? liked(v) : alert("Please log in first") }} src= { v.likers.includes(count.current_user.uid) ? "https://img.icons8.com/ios-filled/50/000000/like--v1.png" : "https://img.icons8.com/ios/50/000000/like--v1.png" }  className="like_btn" />
+                            <img referrerPolicy="no-referrer" onClick={() => { count.current_user.username != "none" ? liked(v) : alert("Please log in first") }} src={v.likers.includes(count.current_user.uid) ? "https://img.icons8.com/ios-filled/50/000000/like--v1.png" : "https://img.icons8.com/ios/50/000000/like--v1.png"} className="like_btn" />
                             <p className="likers_len"  >{v.likers.length}</p>
                         </div>
 
@@ -202,6 +257,13 @@ const App = () => {
                 )
                 }
 
+
+            </div>
+
+
+            <div className={count.feed.length < 1 ? "loading_div" : "invisible"}>
+
+            <img referrerPolicy="no-referrer" className="loader_img" src= {Loader}/>
 
             </div>
 

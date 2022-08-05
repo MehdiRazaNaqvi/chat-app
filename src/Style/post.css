@@ -124,6 +124,7 @@
 
 
 
+
 .post_info_tab {
     width: 100%;
     height: 10%;
@@ -133,7 +134,11 @@
     align-items: center;
     justify-content: start;
 
-    gap: 3%;
+
+    /* border-bottom: 0.2px solid grey; */
+    
+
+    
 }
 
 
@@ -154,7 +159,12 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+
+    /* border-top: 1px solid grey; */
 }
+
+
+
 
 
 
@@ -181,6 +191,40 @@
     font-size: x-small;
 
     /* background-color: red; */
+}
+
+
+.pic_and_name{
+    /* background-color: red; */
+    height: 100%;
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 5%;
+
+
+
+}
+
+
+
+.img_delete{
+    width: 5%;
+    height: 100%;
+    /* background-color: yellow; */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    
+}
+
+
+.img_cover{
+    width: 100%;
+    height: 50%;
 }
 
 
@@ -229,7 +273,10 @@
 
 
 
+
 }
+
+
 
 
 
@@ -244,9 +291,32 @@
 
 
 
+.invisible{
+    display: none;
+}
 
 
 
+
+.loading_div{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgb(253, 253, 253);
+}
+
+
+
+
+.loader_img{
+    /* width: 7%; */
+    /* height: 10%; */
+
+    animation: App-logo-spin 5s infinite;
+}
 
 
 
