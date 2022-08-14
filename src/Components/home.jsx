@@ -8,9 +8,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-import { auth } from "../config/firebase"
-import { GoogleAuthProvider } from "firebase/auth"
-import { signInWithPopup } from "firebase/auth"
 
 
 
@@ -47,37 +44,39 @@ const App = () => {
         <div className='home_base' >
 
 
-    
 
 
 
 
 
 
-           
-
-                <div className="partial left">
-
-                    <img src="https://img.icons8.com/ios/50/000000/airtable.png" className='main_logo'  />
-                    <button className='home_btn' onClick={() => navigate("/chat-app/chat")}>Continue to Chat</button>
-                    <button className='home_btn' onClick={() => navigate("/chat-app/post")}>Continue to Feed</button>
 
 
 
-                    {/* <input type="file" onChange={(e) => checkImage(e)} /> */}
-                    {/* <img className='imagepreview' src={preview || defaultimg} /> */}
+            <div className="partial left">
 
-                </div>
-
-
-                <div className="partial right">
-
-                    <img src="https://webimages.mongodb.com/_com_assets/cms/globe@2x-kgv9ll4o7r-havl08h54l.png?auto=format%2Ccompress&ch=DPR" className='home_pic' />
-                </div>
+                <img src="https://img.icons8.com/ios/50/000000/airtable.png" className='main_logo' />
+                <button className='home_btn' onClick={() => navigate("/chat-app/chat")}>Continue to Chat</button>
+                <button className='home_btn' onClick={() => navigate("/chat-app/post")}>Continue to Feed</button>
 
 
 
-       
+                {/* <input type="file" onChange={(e) => checkImage(e)} /> */}
+                {/* <img className='imagepreview' src={preview || defaultimg} /> */}
+
+            </div>
+
+
+
+
+            <div className="partial right">
+
+                <img src="https://webimages.mongodb.com/_com_assets/cms/globe@2x-kgv9ll4o7r-havl08h54l.png?auto=format%2Ccompress&ch=DPR" className='home_pic' />
+            </div>
+
+
+
+
 
 
 

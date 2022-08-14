@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { getAllByPlaceholderText } from '@testing-library/react'
 
 
 
@@ -7,13 +8,13 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
 
-  current_user: { username: "none" , photoURL : "" },
+  current_user: { username: "none", photoURL: "" },
 
   feed: [],
 
   chat: [],
 
-  messeger : {}
+  messeger: {}
 
 
 
@@ -64,16 +65,12 @@ export const counterSlice = createSlice({
     save_chat: (state, payload) => {
 
       // console.log(payload.payload)
-      state.chat = [...state.chat , payload.payload]
-
-
-      
-
-    }
+      state.chat = [...state.chat, payload.payload]
 
 
 
 
+    },
 
 
 
@@ -88,6 +85,6 @@ export const counterSlice = createSlice({
 
 
 
-export const { current_user, fetch_feed, save_chat } = counterSlice.actions
+export const { current_user, fetch_feed, save_chat} = counterSlice.actions
 
 export default counterSlice.reducer

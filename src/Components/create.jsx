@@ -43,7 +43,8 @@ const App = () => {
 
     const sendpost = () => {
 
-        const data = { user_name: count.current_user.username, user_pic: count.current_user.photoURL, pic : preview,  likers: [] }
+
+        const data = { user_name: count.current_user.username, user_pic: count.current_user.photoURL, pic: preview, likers: [] }
 
         console.log(data)
 
@@ -54,19 +55,34 @@ const App = () => {
             'Access-Control-Allow-Headers': '*'
         }
 
-        fetch('https://chat-app-ser.herokuapp.com/setpost', {
+
+        {
+            preview == "" ? alert("please select some pic") :
 
 
-        // fetch('http://localhost:4000/setpost', {
+                fetch('https://chat-app-ser.herokuapp.com/setpost', {
 
-            method: "post",
-            headers: headers,
-            body: JSON.stringify(data)
-        })
 
-            .catch(err => console.log(err))
+                    // fetch('http://localhost:4000/setpost', {
 
-        navigate("/chat-app/post")
+                    method: "post",
+                    headers: headers,
+                    body: JSON.stringify(data)
+
+                })
+
+                    .catch(err => console.log(err))
+
+
+
+
+            alert("You posted sucesfully")
+            navigate("/chat-app/post")
+
+        }
+
+
+
 
     }
 
@@ -163,10 +179,10 @@ const App = () => {
                         {/* <input  className="input" type="file" onChange={(e) => checkImage(e)} /> */}
 
                         {/* <input placeholder="Paste image address" className="input_post" type="text" onChange={(e) => setPreview(e.target.value)} /> */}
-                        <FileBase64 
-                        
-                        multiple={false}
-                        onDone={({base64}) => setPreview(base64) }
+                        <FileBase64
+
+                            multiple={false}
+                            onDone={({ base64 }) => setPreview(base64)}
                         />
 
 

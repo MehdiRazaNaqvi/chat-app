@@ -14,7 +14,6 @@ import { useEffect, useState } from "react"
 
 
 
-
 import Loader from "../pics/loader.png"
 
 const App = () => {
@@ -22,6 +21,24 @@ const App = () => {
     const dispatch = useDispatch()
 
     const navigate = useNavigate()
+
+
+
+
+    const userExists = () => {
+
+        var userData = JSON.parse(localStorage.getItem("user"));
+        userData = null ?
+
+
+            null
+            :
+
+            // console.log("purana user hai")
+        dispatch(current_user(userData))
+
+
+    }
 
 
 
@@ -34,6 +51,8 @@ const App = () => {
 
 
         const provider = new GoogleAuthProvider();
+
+
         signInWithPopup(auth, provider)
             .then((result) => {
 
@@ -52,6 +71,9 @@ const App = () => {
 
                 dispatch(current_user(obj))
 
+                localStorage.setItem("user", JSON.stringify(obj))
+
+
 
 
 
@@ -64,7 +86,8 @@ const App = () => {
 
                 // const credential = GoogleAuthProvider.credentialFromError(error);
 
-            });
+            })
+
 
 
 
@@ -78,7 +101,7 @@ const App = () => {
 
     const liked = (v) => {
 
-
+        alert("like added")
         const headers = {
             'Content-Type': 'application/json;charset=UTF-8',
             "Access-Control-Allow-Origin": "*",
@@ -107,13 +130,14 @@ const App = () => {
 
 
 
-    console.log(count.feed)
+
 
 
 
     const delete_post = (v) => {
 
-        
+
+        alert("deleting your post")
 
         const headers = {
             'Content-Type': 'application/json;charset=UTF-8',
@@ -121,6 +145,7 @@ const App = () => {
             'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
             'Access-Control-Allow-Headers': '*'
         }
+
 
 
         const del_payload = { id: v._id }
@@ -170,6 +195,9 @@ const App = () => {
     useEffect(() => {
 
         fetch_post()
+
+        userExists()
+
     }, [2]);
 
 
@@ -242,15 +270,24 @@ const App = () => {
 
 
 
+
                         <div className="pic_tab" >
                             <img src={v.pic} className="post_pic" />
                         </div>
+
+
 
                         <div className="likes_tab" >
 
                             <img referrerPolicy="no-referrer" onClick={() => { count.current_user.username != "none" ? liked(v) : alert("Please log in first") }} src={v.likers.includes(count.current_user.uid) ? "https://img.icons8.com/ios-filled/50/000000/like--v1.png" : "https://img.icons8.com/ios/50/000000/like--v1.png"} className="like_btn" />
                             <p className="likers_len"  >{v.likers.length}</p>
+
                         </div>
+
+
+
+
+
 
                     </div>
 
@@ -261,9 +298,11 @@ const App = () => {
             </div>
 
 
+
+
             <div className={count.feed.length < 1 ? "loading_div" : "invisible"}>
 
-            <img referrerPolicy="no-referrer" className="loader_img" src= {Loader}/>
+                <img referrerPolicy="no-referrer" className="loader_img" src={Loader} />
 
             </div>
 
