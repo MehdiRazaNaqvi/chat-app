@@ -13,7 +13,7 @@
     flex-direction: column;
     justify-content: end;
 
-  
+
 
 }
 
@@ -24,15 +24,15 @@
     width: 100%;
     height: 100%;
 
-    overflow: hidden;
+    overflow: auto;
 
     /* height: max-content; */
     /* background-color: rgb(250, 250, 250); */
-    
 
-        /* background-image: linear-gradient(rgb(235, 235, 235) , white); */
 
-        background-color: rgb(245, 245, 245);
+    /* background-image: linear-gradient(rgb(235, 235, 235) , white); */
+
+    background-color: rgb(243, 243, 243);
 
     display: flex;
     flex-direction: column;
@@ -40,8 +40,8 @@
     justify-content: end;
 
 
+    
 
- 
 
 
 
@@ -52,19 +52,19 @@
 
 
 
-.send_tab { 
+.send_tab {
     width: 100%;
     height: 10vh;
     /* background-color: rgb(238, 238, 238); */
 
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
 
 
-    
-}   
+
+}
 
 
 
@@ -82,10 +82,10 @@
 
 
 .btn {
-    width: 10%;
+    width: 3rem;
     height: 50%;
-    border-radius: 0.5rem;
-    border: 0.1px solid grey;
+    border: none;
+    background-color: white;
 
 }
 
@@ -93,11 +93,11 @@
 
 
 .message_bg {
-    width: 45%;
+    width: 30vw;
     height: 3%;
     padding: 1%;
-    background-color: rgb(249, 255, 255);
-
+    /* background-color: rgb(163, 190, 163); */
+    background-color: rgb(43, 155, 203);
     border-radius: 1rem;
     font-size: x-small;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -109,7 +109,16 @@
     gap: 5%;
 
     margin-bottom: 2%;
+
+    color: whitesmoke;
+
+    margin-left: 5%;
+
+    position: relative;
 }
+
+
+
 
 
 
@@ -117,9 +126,11 @@
 
 .own_msg {
 
+    margin-right: 5%;
+    margin-left: 0%;
 
     align-self: flex-end;
-    background-color: rgb(226, 255, 183);
+    background-color: rgb(23, 141, 66);
 
 
 
@@ -129,8 +140,8 @@
 
 
 .text_pic {
-    width: 8%;
-    height: 100%;
+    width: 10%;
+    height: 90%;
     border-radius: 50%;
 
 }
@@ -138,15 +149,36 @@
 
 
 
-.login_to_join{
-    font-size: small;
-    color: grey;
-    
+.text-time {
+
+    position: absolute;
+    right: 15%;
+    font-size: xx-small;
+
+}
+
+
+.del-img {
+    width: 5%;
+    position: absolute;
+    right: 5%;
+
+    height: 50%;
+
 }
 
 
 
-.msg_and_pic{
+
+.login_to_join {
+    font-size: small;
+    color: grey;
+
+}
+
+
+
+.msg_and_pic {
     width: 95%;
     background-color: red;
     height: 100%;
@@ -159,12 +191,17 @@
 
 
 
+.send-icon {
+
+    width: 100%;
+    height: 100%;
+}
 
 
 
 
-*{
-    font-family:sans-serif;
+* {
+    font-family: sans-serif;
 }
 
 
@@ -184,11 +221,15 @@
 
 @media only screen and (max-width:700px) {
 
-    
-.send_btn{
-    font-size: xx-small;
-    
-}
+
+    .send_btn {
+        font-size: xx-small;
+
+    }
+
+    .message_bg {
+        width: 50vw;
+    }
 
 
 
@@ -197,18 +238,33 @@
 
 
 @media only screen and (max-width:400px) {
-    
-    .send_btn{
+
+    .send_btn {
         font-size: 45%;
-        
+
     }
 
 
-    .message_bg{
+    .message_bg {
         height: 5%;
-        width: 60%;
+        width: 75vw;
 
         margin-bottom: 5%;
     }
+
+
+
+    .del-img {
+        width: 5%;
+        height: 40%;
+    }
+
+
+    .btn {
+        width: 2rem;
+        border: none;
+        background-color: white;
+    }
+
 
 }

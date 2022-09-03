@@ -11,17 +11,17 @@ import io from "socket.io-client"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { save_chat, current_user } from "../store/counterslice"
+import { save_chat, current_user, delete_msg_redux } from "../store/counterslice"
 
 import { useDispatch, useSelector } from "react-redux"
 
+import alanBtn from "@alan-ai/alan-sdk-web"
+
+import Navbar from "../Components/navbar"
 
 
 const socket = io.connect("https://socket--io.herokuapp.com/")
 // const socket = io.connect("http://localhost:5000")
-
-
-
 
 
 
@@ -34,7 +34,7 @@ const App = () => {
 
     const dispatch = useDispatch()
 
-    const navigate = useNavigate()
+
 
     const [message, setmessage] = useState('')
 
@@ -49,15 +49,35 @@ const App = () => {
 
 
 
+
     const sendchat = () => {
 
 
 
-        socket.emit("chat", { mess: message, name: count.current_user.username, user_pic: count.current_user.photoURL })
+        socket.emit("chat", { mess: message, name: count.current_user.username, user_pic: count.current_user.photoURL, time: time })
+
+
+        const headers = {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+            'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': '*'
+        }
+
+
+        fetch('https://chat-app-ser.herokuapp.com/savechat', {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify({ mess: message, name: count.current_user.username, user_pic: count.current_user.photoURL, time: time })
+
+        })
+
 
 
 
         setmessage('')
+
+
 
 
 
@@ -70,20 +90,62 @@ const App = () => {
 
 
 
+
     useEffect(() => {
 
         socket.on("chat", (payload) => {
 
-            // console.log(payload)
-            dispatch(save_chat(payload))
-            // setchat([...chat, { name: payload.name, mess: payload.mess }])
 
-            // array = [...array, payload]
-            // console.log(chat)
+
+            dispatch(save_chat(payload))
+
+
 
         })
 
+
+
+
+
+        function updateScreen(time) {
+
+            alanBtn({
+
+                key: "5a699ed177a25d52ad3b004399eccbd82e956eca572e1d8b807a3e2338fdd0dc/stage",
+
+                onCommand: (commandData) => {
+
+                    if (commandData.command === "voice-msg") {
+
+                        setmessage(commandData.data)
+                        // socket.emit("chat", { mess: message, name: count.current_user.username, user_pic: count.current_user.photoURL, time: time })
+                            
+
+
+
+
+
+
+
+                    }
+
+
+                }
+            })
+        }
+
+
+
+
+
+        requestAnimationFrame(updateScreen);
+
+
+
+
+
     }, [1])
+
 
 
 
@@ -115,6 +177,8 @@ const App = () => {
 
                 dispatch(current_user(obj))
 
+                localStorage.setItem("chat-user", JSON.stringify(obj))
+
 
 
 
@@ -139,44 +203,76 @@ const App = () => {
 
 
 
+
+    const delete_msg = (v) => {
+
+        dispatch(delete_msg_redux(v))
+
+
+
+        const headers = {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+            'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': '*'
+        }
+
+        // fetch('http://localhost:4000/delete-msg', {
+        fetch('https://chat-app-ser.herokuapp.com/delete-msg', {
+            method: "post",
+            headers: headers,
+            body: JSON.stringify(v)
+
+        })
+
+    }
+
+
+
+
+
+
+
+
+
+
+    var today = new Date();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+
+
+
+
     return (
         <div className="chat_base">
 
 
-            <div className='navbar'>
-
-                <img onClick={() => navigate("/chat-app")} src="https://img.icons8.com/ios/50/000000/airtable.png" className='logo' />
-
-                <span className="nav_span_right">
-
-
-
-                    {count.current_user.username != "none" ?
-
-                        <img onClick={() => google_login()} src={count.current_user.photoURL} className='nav_img' referrerPolicy='no-referrer' />
-
-                        :
-                        <p className="nav_text border" onClick={() => google_login()}>Log in</p>
-                    }
-
-
-                    <p className="nav_text" onClick={() => navigate("/chat-app/post")} >Feed</p>
-                    <p className="nav_text" onClick={() => navigate("/chat-app/create")} >Post</p>
-
-                </span>
-
-            </div>
-
+            <Navbar />
 
 
 
             <div className="chat_space">
 
                 {count.chat.map((v, i) => (
+
                     <div className={count.current_user.photoURL == v.user_pic ? "message_bg own_msg" : "message_bg"} key={i}>
 
-                            <img src={v.user_pic} referrerPolicy="no-referrer" className="text_pic" />
-                            {v.mess}
+                        <img src={v.user_pic} referrerPolicy="no-referrer" className="text_pic" />
+                        {v.mess}
+                        <p className="text-time">{v.time}</p>
+
+
+
+                        <img onClick={() => delete_msg(v)} className={count.current_user.photoURL == v.user_pic ? "del-img" : "invisible"} src="https://img.icons8.com/external-inkubators-detailed-outline-inkubators/25/000000/external-delete-ecommerce-user-interface-inkubators-detailed-outline-inkubators.png" />
+
+
+
+
+
+
+
+
+
 
 
                     </div>
@@ -188,15 +284,23 @@ const App = () => {
 
 
 
+
+
             {count.current_user.username != "none" ?
+
                 <span className="send_tab" >
 
                     <input className="form-control" type="text" placeholder="Type message" value={message} onChange={(e) => setmessage(e.target.value)} />
 
-                    <button onClick={() => sendchat()} className=" send_btn btn btn-outline-success">Send</button>
+                    <button onClick={() => sendchat()} className=" send_btn btn btn-outline-success "><img src="https://img.icons8.com/external-febrian-hidayat-flat-febrian-hidayat/50/000000/external-Send-user-interface-febrian-hidayat-flat-febrian-hidayat.png" className="send-icon" /></button>
 
                 </span>
+
+
                 :
+
+
+
                 <span className="send_tab" onClick={() => google_login()} >
                     <p className="login_to_join">Log in to join the chat</p>
 

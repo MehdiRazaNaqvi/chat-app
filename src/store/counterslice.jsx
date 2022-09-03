@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAllByPlaceholderText } from '@testing-library/react'
+
+
 
 
 
@@ -14,7 +15,9 @@ const initialState = {
 
   chat: [],
 
-  messeger: {}
+  messeger: {},
+
+  users: []
 
 
 
@@ -52,6 +55,7 @@ export const counterSlice = createSlice({
 
 
 
+
     fetch_feed: (state, payload) => {
 
       state.feed = payload.payload
@@ -69,10 +73,32 @@ export const counterSlice = createSlice({
 
 
 
+    },
+
+
+
+
+    load_chat_users: (state, payload) => {
+
+      // console.log(payload.payload)
+      state.users = payload.payload.users
+      state.chat = payload.payload.chat
 
     },
 
 
+
+
+
+
+
+    delete_msg_redux: (state, payload) => {
+
+
+      state.chat = state.chat.filter(v => v.mess !== payload.payload.mess);
+
+
+    }
 
 
 
@@ -85,6 +111,6 @@ export const counterSlice = createSlice({
 
 
 
-export const { current_user, fetch_feed, save_chat} = counterSlice.actions
+export const { current_user, fetch_feed, save_chat, load_chat_users, delete_msg_redux } = counterSlice.actions
 
 export default counterSlice.reducer

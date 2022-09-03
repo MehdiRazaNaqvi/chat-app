@@ -16,6 +16,7 @@ import { useState } from "react";
 
 import FileBase64 from "react-file-base64";
 
+import Navbar from "../Components/navbar"
 
 
 const App = () => {
@@ -86,6 +87,7 @@ const App = () => {
 
     }
 
+    
 
 
 
@@ -142,31 +144,7 @@ const App = () => {
     return (
         <div className="create_base">
 
-
-            <div className='navbar crnavbar'>
-
-                <img onClick={() => navigate("/chat-app")} src="https://img.icons8.com/ios/50/000000/airtable.png" className='logo' />
-
-                <span className="nav_span_right">
-
-
-
-                    {count.current_user.username != "none" ?
-
-                        <img onClick={() => google_login()} src={count.current_user.photoURL} className='nav_img' referrerPolicy='no-referrer' />
-
-                        :
-                        <p className="nav_text border" onClick={() => google_login()}>Log in</p>
-                    }
-
-
-                    <p className="nav_text" onClick={() => navigate("/chat-app/post")} >Feed</p>
-                    <p className="nav_text" onClick={() => navigate("/chat-app/chat")} >Chat</p>
-
-                </span>
-
-            </div>
-
+            <Navbar />
 
 
             {

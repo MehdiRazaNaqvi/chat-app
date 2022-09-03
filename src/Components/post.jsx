@@ -2,16 +2,13 @@
 import "../Style/post.css"
 import { useDispatch, useSelector } from "react-redux"
 
-import { auth } from "../config/firebase"
-import { GoogleAuthProvider } from "firebase/auth"
-import { signInWithPopup } from "firebase/auth"
 
-import { current_user, fetch_feed } from "../store/counterslice"
+import { fetch_feed } from "../store/counterslice"
 
 import { useNavigate } from "react-router-dom"
 
-import { useEffect, useState } from "react"
 
+import Navbar from "../Components/navbar"
 
 
 import Loader from "../pics/loader.png"
@@ -20,80 +17,18 @@ const App = () => {
     const count = useSelector(state => state.counter)
     const dispatch = useDispatch()
 
-    const navigate = useNavigate()
 
-
-
-
-    const userExists = () => {
-
-        var userData = JSON.parse(localStorage.getItem("user"));
-        userData = null ?
-
-
-            null
-            :
-
-            // console.log("purana user hai")
-        dispatch(current_user(userData))
-
-
-    }
-
-
-
-
-    const google_login = () => {
+  
+    
 
 
 
 
 
 
-        const provider = new GoogleAuthProvider();
 
 
-        signInWithPopup(auth, provider)
-            .then((result) => {
-
-
-
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-
-                const user = result.user;
-
-
-
-
-                const obj = { username: user.displayName, photoURL: user.photoURL, uid: user.uid }
-
-
-                dispatch(current_user(obj))
-
-                localStorage.setItem("user", JSON.stringify(obj))
-
-
-
-
-
-            }).catch((error) => {
-
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage)
-                // const email = error.email;
-
-                // const credential = GoogleAuthProvider.credentialFromError(error);
-
-            })
-
-
-
-
-
-
-    }
+    console.log(count.current_user)
 
 
 
@@ -192,13 +127,10 @@ const App = () => {
 
 
 
-    useEffect(() => {
 
-        fetch_post()
 
-        userExists()
 
-    }, [2]);
+
 
 
 
@@ -208,32 +140,7 @@ const App = () => {
 
 
 
-            <div className='navbar'>
-
-                <img onClick={() => navigate("/chat-app")} src="https://img.icons8.com/ios/50/000000/airtable.png" className='logo' />
-
-                <span className="nav_span_right">
-
-
-
-                    {count.current_user.username != "none" ?
-
-                        <img onClick={() => google_login()} src={count.current_user.photoURL} className='nav_img' referrerPolicy='no-referrer' />
-
-                        :
-                        <p className="nav_text border" onClick={() => google_login()}>Log in</p>
-                    }
-
-
-                    <p className="nav_text" onClick={() => navigate("/chat-app/create")} >Post</p>
-                    <p className="nav_text" onClick={() => navigate("/chat-app/chat")} >Chat</p>
-
-                </span>
-
-            </div>
-
-
-
+            <Navbar />
 
 
 
