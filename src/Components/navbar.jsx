@@ -87,7 +87,7 @@ const App = () => {
     return (
 
 
-        <div className='navbar'>
+        <div className='navbar' style={{ width:"50rem"}}>
 
             <img onClick={() => navigate("/chat-app")} src="https://img.icons8.com/ios/50/000000/airtable.png" className='logo' />
 

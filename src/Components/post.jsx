@@ -12,6 +12,7 @@ import Navbar from "../Components/navbar"
 
 
 import Loader from "../pics/loader.png"
+import { api_url } from "../config/api"
 
 const App = () => {
     const count = useSelector(state => state.counter)
@@ -49,7 +50,7 @@ const App = () => {
         {
             v.likers.includes(count.current_user.uid) ? alert("You have already like this post") :
 
-                fetch('https://chat-app-ser.herokuapp.com/liked', {
+                fetch(`${api_url}/liked`, {
                     method: "post",
                     headers: headers,
 
@@ -87,7 +88,7 @@ const App = () => {
 
 
 
-        fetch('https://chat-app-ser.herokuapp.com/delete', {
+        fetch(`${api_url}/delete`, {
             method: "post",
             headers: headers,
 
@@ -115,7 +116,7 @@ const App = () => {
             'Access-Control-Allow-Headers': '*'
         }
 
-        fetch('https://chat-app-ser.herokuapp.com/getpost', {
+        fetch(`${api_url}/getpost`, {
             method: "get",
             headers: headers
         })

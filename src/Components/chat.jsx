@@ -18,10 +18,11 @@ import { useDispatch, useSelector } from "react-redux"
 import alanBtn from "@alan-ai/alan-sdk-web"
 
 import Navbar from "../Components/navbar"
+import { api_url } from "../config/api"
 
 
-const socket = io.connect("https://socket--io.herokuapp.com/")
-// const socket = io.connect("http://localhost:5000")
+// const socket = io.connect("https://socket--io.herokuapp.com/")
+const socket = io.connect("http://localhost:4000")
 
 
 
@@ -45,10 +46,6 @@ const App = () => {
 
 
 
-    console.log(count.chat)
-
-
-
 
     const sendchat = () => {
 
@@ -65,13 +62,15 @@ const App = () => {
         }
 
 
-        fetch('https://chat-app-ser.herokuapp.com/savechat', {
+        fetch(`${api_url}/savechat`, {
             method: "POST",
             headers: headers,
             body: JSON.stringify({ mess: message, name: count.current_user.username, user_pic: count.current_user.photoURL, time: time })
 
         })
 
+            .then(r => r.json())
+            .then(res => console.log(res))
 
 
 
@@ -119,7 +118,7 @@ const App = () => {
 
                         setmessage(commandData.data)
                         // socket.emit("chat", { mess: message, name: count.current_user.username, user_pic: count.current_user.photoURL, time: time })
-                            
+
 
 
 
@@ -218,7 +217,7 @@ const App = () => {
         }
 
         // fetch('http://localhost:4000/delete-msg', {
-        fetch('https://chat-app-ser.herokuapp.com/delete-msg', {
+        fetch(`${api_url}/delete-msg`, {
             method: "post",
             headers: headers,
             body: JSON.stringify(v)
@@ -244,26 +243,26 @@ const App = () => {
 
 
     return (
-        <div className="chat_base">
+        <div className="chat_base" style={{ width: "50rem" }}>
 
 
             <Navbar />
 
 
 
-            <div className="chat_space">
+            <div className="chat_space" style={{ backgroundColor: "white" }}>
 
                 {count.chat.map((v, i) => (
 
                     <div className={count.current_user.photoURL == v.user_pic ? "message_bg own_msg" : "message_bg"} key={i}>
 
-                        <img src={v.user_pic} referrerPolicy="no-referrer" className="text_pic" />
-                        {v.mess}
-                        <p className="text-time">{v.time}</p>
+                        <img src={v.user_pic} referrerPolicy="no-referrer" className="text_pic" style={{ height: "4rem", width: "4rem" }} />
+                        <span style={{ fontSize: "1.2rem", width: "50%", wordBreak: "break-word" }}>  {v.mess} </span>
+                        <p style={{ fontSize: "1rem" }} className={count.current_user.photoURL == v.user_pic ? "text-time" : "text-time-other"} >{v.time}</p>
 
 
 
-                        <img onClick={() => delete_msg(v)} className={count.current_user.photoURL == v.user_pic ? "del-img" : "invisible"} src="https://img.icons8.com/external-inkubators-detailed-outline-inkubators/25/000000/external-delete-ecommerce-user-interface-inkubators-detailed-outline-inkubators.png" />
+                        <img style={{ height: "2rem", width: "2rem" }} onClick={() => delete_msg(v)} className={count.current_user.photoURL == v.user_pic ? "del-img" : "invisible"} src="https://img.icons8.com/external-inkubators-detailed-outline-inkubators/25/000000/external-delete-ecommerce-user-interface-inkubators-detailed-outline-inkubators.png" />
 
 
 

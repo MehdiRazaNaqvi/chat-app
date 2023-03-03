@@ -17,19 +17,6 @@ const App = () => {
 
     const count = useSelector(state => state.counter)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     return (
         <div className="priv-base">
 

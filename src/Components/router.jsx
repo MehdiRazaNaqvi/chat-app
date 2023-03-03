@@ -14,6 +14,8 @@ import Priv from "../Components/private"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 
+import { api_url } from "../config/api"
+
 
 import { current_user, load_chat_users, fetch_feed } from "../store/counterslice"
 
@@ -37,7 +39,7 @@ const App = () => {
             'Access-Control-Allow-Headers': '*'
         }
 
-        fetch('https://chat-app-ser.herokuapp.com/getpost', {
+        fetch(`${api_url}/getpost`, {
             method: "get",
             headers: headers
         })
@@ -58,7 +60,7 @@ const App = () => {
         }
 
 
-        fetch('https://chat-app-ser.herokuapp.com/loadchat', {
+        fetch(`${api_url}/loadchat`, {
             method: "get",
             headers: headers
 
@@ -133,9 +135,7 @@ const App = () => {
                     <Route path="/chat-app/post" element={<Post />} />
                     <Route path="/chat-app/create" element={<Create />} />
                     <Route path="/chat-app/chat" element={<Chat />} />
-                    <Route path="/chat-app/private" element={<Priv />} />
-
-
+                    <Route path="/chat-app/private" element={<Priv />} />   
 
                 </Routes>
             </Router>

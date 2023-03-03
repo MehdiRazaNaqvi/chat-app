@@ -17,6 +17,7 @@ import { useState } from "react";
 import FileBase64 from "react-file-base64";
 
 import Navbar from "../Components/navbar"
+import { api_url } from "../config/api"
 
 
 const App = () => {
@@ -61,7 +62,7 @@ const App = () => {
             preview == "" ? alert("please select some pic") :
 
 
-                fetch('https://chat-app-ser.herokuapp.com/setpost', {
+                fetch(`${api_url}/setpost`, {
 
 
                     // fetch('http://localhost:4000/setpost', {
